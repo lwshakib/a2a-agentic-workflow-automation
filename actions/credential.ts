@@ -5,8 +5,8 @@ import { encryptCredential, decryptCredential } from "@/lib/crypto";
 import { currentUser } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { NodeType } from "../../generated/prisma/enums";
-import { Prisma } from "../../generated/prisma/client";
+import { NodeType } from "@/generated/prisma/enums";
+import { Prisma } from "@/generated/prisma/client";
 
 const createCredentialSchema = z.object({
   name: z.string().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
