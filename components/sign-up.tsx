@@ -143,7 +143,7 @@ export default function SignUp() {
                             asChild
                             variant="link"
                             className="px-2">
-                            <Link href="#">Sign In</Link>
+                            <Link href="/sign-in">Sign In</Link>
                         </Button>
                     </p>
                 </div>
