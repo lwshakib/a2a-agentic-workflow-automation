@@ -6,14 +6,14 @@ import {
 import AppSidebar from "@/components/app-sidebar";
 import { Separator } from "@/components/ui/separator";
 import { BreadcrumbNav } from "@/components/breadcrumb-nav";
-import { getOrCreateUser } from "@/actions/user";
+
 
 export default async function Layout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  await getOrCreateUser();
+
   return (
     <SidebarProvider>
       <AppSidebar />
