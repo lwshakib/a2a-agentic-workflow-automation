@@ -19,6 +19,11 @@ A powerful, full-stack workflow automation platform built with Next.js that enab
 - **Execution History**: Track workflow runs with detailed logs and status monitoring
 - **Background Processing**: Reliable workflow execution powered by Inngest
 
+## 📱 App Demo
+
+![App Demo](public/demo.png)
+
+
 ## 🏗️ System Architecture
 
 ```mermaid
