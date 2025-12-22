@@ -15,7 +15,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-import { NodeType } from "../../../generated/prisma/enums";
+import { NodeType } from "@/generated/prisma/enums";
 import { on } from "events";
 import { se } from "date-fns/locale";
 import { Separator } from "@/components/ui/separator";

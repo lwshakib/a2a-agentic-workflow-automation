@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import { encryptCredential, decryptCredential } from "@/lib/crypto";
-import { currentUser } from "@clerk/nextjs/server";
+import { currentUser } from "@/actions/user";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { NodeType } from "@/generated/prisma/enums";
@@ -32,8 +32,8 @@ export async function getCredentials(nodeType?: NodeType) {
   }
 
   try {
-    const where: { clerkId: string; nodeType?: NodeType } = {
-      clerkId: user.id,
+    const where: { userId: string; nodeType?: NodeType } = {
+      userId: user.id,
     };
 
     if (nodeType) {
@@ -59,13 +59,13 @@ export async function getCredentials(nodeType?: NodeType) {
   }
 }
 
-export async function getCredentialById(credentialId: string, clerkId?: string) {
-  // If clerkId is provided (e.g., from Inngest context), use it directly
+export async function getCredentialById(credentialId: string, userId?: string) {
+  // If userId is provided (e.g., from Inngest context), use it directly
   // Otherwise, get it from current user (for API routes)
-  let userClerkId: string;
+  let userIdToUse: string;
   
-  if (clerkId) {
-    userClerkId = clerkId;
+  if (userId) {
+    userIdToUse = userId;
   } else {
     const user = await currentUser();
     if (!user) {
@@ -75,14 +75,14 @@ export async function getCredentialById(credentialId: string, clerkId?: string) 
         credential: null,
       };
     }
-    userClerkId = user.id;
+    userIdToUse = user.id;
   }
 
   try {
     const credential = await prisma.credential.findFirst({
       where: {
         id: credentialId,
-        clerkId: userClerkId,
+        userId: userIdToUse,
       },
     });
 
@@ -126,8 +126,8 @@ export async function createCredential(data: z.infer<typeof createCredentialSche
     // Check if name already exists for this user
     const existing = await prisma.credential.findUnique({
       where: {
-        clerkId_name: {
-          clerkId: user.id,
+        userId_name: {
+          userId: user.id,
           name: validatedData.name,
         },
       },
@@ -146,7 +146,7 @@ export async function createCredential(data: z.infer<typeof createCredentialSche
 
     const credential = await prisma.credential.create({
       data: {
-        clerkId: user.id,
+        userId: user.id,
         name: validatedData.name,
         description: validatedData.description || null,
         nodeType: validatedData.nodeType,
@@ -196,7 +196,7 @@ export async function updateCredential(
     const existing = await prisma.credential.findFirst({
       where: {
         id: credentialId,
-        clerkId: user.id,
+        userId: user.id,
       },
     });
 
@@ -208,8 +208,8 @@ export async function updateCredential(
     if (validatedData.name && validatedData.name !== existing.name) {
       const nameConflict = await prisma.credential.findUnique({
         where: {
-          clerkId_name: {
-            clerkId: user.id,
+          userId_name: {
+            userId: user.id,
             name: validatedData.name,
           },
         },
@@ -279,7 +279,7 @@ export async function deleteCredential(credentialId: string) {
     const credential = await prisma.credential.findFirst({
       where: {
         id: credentialId,
-        clerkId: user.id,
+        userId: user.id,
       },
     });
 

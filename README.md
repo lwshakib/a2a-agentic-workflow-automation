@@ -36,7 +36,7 @@ flowchart TB
     end
 
     subgraph Auth["🔐 Authentication"]
-        Clerk["Clerk Auth"]
+        BetterAuth["BetterAuth"]
     end
 
     subgraph Background["⚙️ Background Jobs"]
@@ -59,8 +59,8 @@ flowchart TB
     UI --> Pages
     Editor --> State
     State --> API
-    Pages --> Clerk
-    API --> Clerk
+    Pages --> BetterAuth
+    API --> BetterAuth
     API --> Inngest
     Inngest --> Queue
     Queue --> External
@@ -115,7 +115,7 @@ erDiagram
 
     User {
         string id PK
-        string clerkId UK
+        string userId UK
         string name
         string email UK
         string imageUrl
@@ -125,7 +125,7 @@ erDiagram
 
     Workflow {
         string id PK
-        string clerkId FK
+        string userId FK
         string name
         string description
         datetime createdAt
@@ -153,7 +153,7 @@ erDiagram
 
     Credential {
         string id PK
-        string clerkId FK
+        string userId FK
         string name
         string description
         enum nodeType
@@ -202,7 +202,7 @@ mindmap
 | **Frontend**        | React 19, React Flow, Zustand             |
 | **Styling**         | Tailwind CSS 4, shadcn/ui, Motion         |
 | **Database**        | PostgreSQL, Prisma ORM 7                  |
-| **Authentication**  | Clerk                                     |
+| **Authentication**  | BetterAuth                                |
 | **Background Jobs** | Inngest                                   |
 | **AI SDKs**         | Vercel AI SDK (OpenAI, Anthropic, Google) |
 | **Validation**      | Zod 4                                     |
@@ -214,7 +214,7 @@ mindmap
 - **Node.js** 18.0.0 or later
 - **npm** (v9+), **yarn** (v1.22+), or **pnpm**
 - **PostgreSQL** database
-- **Clerk** account for authentication
+- **BetterAuth** configured with Google OAuth
 - **Inngest** account for background jobs
 - (Optional) API keys for AI providers (OpenAI, Anthropic, Google)
 
@@ -245,11 +245,14 @@ Create a `.env.local` file based on `.env.example`:
 # Database
 DATABASE_URL="postgresql://user:password@localhost:5432/workflow_automation"
 
-# Clerk Authentication
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
-CLERK_SECRET_KEY=sk_test_...
-NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
-NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+# BetterAuth Configuration
+BETTER_AUTH_SECRET=your-secret-key
+BETTER_AUTH_URL=http://localhost:3000
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+
+# Google OAuth
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
 
 # Inngest
 INNGEST_SIGNING_KEY=...
@@ -406,7 +409,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - [Next.js](https://nextjs.org/) - The React Framework
 - [Prisma](https://www.prisma.io/) - Next-generation ORM
-- [Clerk](https://clerk.com/) - Authentication and user management
+- [BetterAuth](https://better-auth.com/) - Authentication and user management
 - [Inngest](https://www.inngest.com/) - Background job processing
 - [React Flow](https://reactflow.dev/) - Node-based workflow editor
 - [shadcn/ui](https://ui.shadcn.com/) - Beautiful UI components

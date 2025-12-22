@@ -1,37 +1,34 @@
-import prisma from "@/lib/prisma";
-import { currentUser } from "@clerk/nextjs/server";
+"use server";
 
-export async function getOrCreateUser() {
-  const user = await currentUser();
-  if (!user) return null;
-  try {
-    const existUser = await prisma.user.findUnique({
-      where: { clerkId: user.id },
-    });
+import { headers } from "next/headers";
 
-    if (existUser) {
-      return existUser;
+export interface CurrentUser {
+    id: string;
+    name: string;
+    email: string;
+    emailVerified: boolean;
+    image?: string | null;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+/**
+ * Get the current user from the request headers.
+ * The proxy middleware injects user info into x-user header.
+ */
+export async function currentUser(): Promise<CurrentUser | null> {
+    try {
+        const headersList = await headers();
+        const userHeader = headersList.get('x-user');
+        
+        if (!userHeader) {
+            return null;
+        }
+        
+        const user = JSON.parse(userHeader) as CurrentUser;
+        return user;
+    } catch (error) {
+        console.error('Error parsing user from headers:', error);
+        return null;
     }
-
-    const name = user.fullName ?? "";
-    const email = user.emailAddresses[0]?.emailAddress ?? "";
-    const imageUrl = user.imageUrl ?? "";
-    const clerkId = user.id;
-
-    const newUser = await prisma.user.create({
-      data: {
-        clerkId,
-        name,
-        email,
-        imageUrl,
-      },
-    });
-
-    return newUser;
-  } catch (error) {
-    if (error instanceof Error) {
-      // Error handled silently
-    }
-    return null;
-  }
 }

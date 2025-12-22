@@ -1,13 +1,13 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { currentUser } from "@clerk/nextjs/server";
+import { currentUser } from "@/actions/user";
 import { revalidatePath } from "next/cache";
-import { ExecutionStatus } from "../../generated/prisma/enums";
+import { ExecutionStatus } from "@/generated/prisma/enums";
 import {
   InputJsonValue,
   NullableJsonNullValueInput,
-} from "../../generated/prisma/internal/prismaNamespace";
+} from "@/generated/prisma/internal/prismaNamespace";
 
 export async function getExecutions(workflowId?: string, page: number = 1, limit: number = 20) {
   const user = await currentUser();
@@ -28,12 +28,12 @@ export async function getExecutions(workflowId?: string, page: number = 1, limit
   try {
     const where: {
       workflow: {
-        clerkId: string;
+        userId: string;
       };
       workflowId?: string;
     } = {
       workflow: {
-        clerkId: user.id,
+        userId: user.id,
       },
     };
 
@@ -102,7 +102,7 @@ export async function getExecutionById(executionId: string) {
       where: {
         id: executionId,
         workflow: {
-          clerkId: user.id,
+          userId: user.id,
         },
       },
       include: {
@@ -141,20 +141,20 @@ export async function getExecutionById(executionId: string) {
 export async function createExecution(
   workflowId: string,
   triggerType?: string,
-  clerkId?: string
+  userId?: string
 ) {
-  // If clerkId is provided (e.g., from Inngest context), use it directly
+  // If userId is provided (e.g., from Inngest context), use it directly
   // Otherwise, get it from current user (for API routes)
-  let userClerkId: string;
+  let userIdToUse: string;
 
-  if (clerkId) {
-    userClerkId = clerkId;
+  if (userId) {
+    userIdToUse = userId;
   } else {
     const user = await currentUser();
     if (!user) {
       return { success: false, error: "Unauthorized", execution: null };
     }
-    userClerkId = user.id;
+    userIdToUse = user.id;
   }
 
   try {
@@ -162,7 +162,7 @@ export async function createExecution(
     const workflow = await prisma.workflow.findFirst({
       where: {
         id: workflowId,
-        clerkId: userClerkId,
+        userId: userIdToUse,
       },
     });
 
@@ -202,20 +202,20 @@ export async function updateExecution(
     result?: NullableJsonNullValueInput | InputJsonValue;
     completedAt?: Date;
   },
-  clerkId?: string
+  userId?: string
 ) {
-  // If clerkId is provided (e.g., from Inngest context), use it directly
+  // If userId is provided (e.g., from Inngest context), use it directly
   // Otherwise, get it from current user (for API routes)
-  let userClerkId: string;
+  let userIdToUse: string;
 
-  if (clerkId) {
-    userClerkId = clerkId;
+  if (userId) {
+    userIdToUse = userId;
   } else {
     const user = await currentUser();
     if (!user) {
       return { success: false, error: "Unauthorized", execution: null };
     }
-    userClerkId = user.id;
+    userIdToUse = user.id;
   }
 
   try {
@@ -224,7 +224,7 @@ export async function updateExecution(
       where: {
         id: executionId,
         workflow: {
-          clerkId: userClerkId,
+          userId: userIdToUse,
         },
       },
     });

@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
     const executionResult = await createExecution(
       workflowId,
       "google-form",
-      workflow.clerkId
+      workflow.userId
     );
 
     // Send event to Inngest to execute the workflow

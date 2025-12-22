@@ -24,7 +24,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { SlackNodeData } from "@/features/executions/node-data-types";
-import { NodeType } from "../../../../../generated/prisma/enums";
+import { NodeType } from "@/generated/prisma/enums";
 
 interface Props {
   open: boolean;

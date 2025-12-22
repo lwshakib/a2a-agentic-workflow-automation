@@ -38,7 +38,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { Plus, MoreVertical, Loader2, KeyIcon, GlobeIcon } from "lucide-react";
 import { toast } from "sonner";
-import { NodeType } from "../../../../../generated/prisma/enums";
+import { NodeType } from "@/generated/prisma/enums";
 import Image from "next/image";
 import {
   getCredentials,

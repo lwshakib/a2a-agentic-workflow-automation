@@ -5,8 +5,8 @@ import prisma from "@/lib/prisma";
 import { topologicalSort } from "./utils";
 import { getExecutor } from "@/features/executions/lib/executor-registry";
 import type { NodeDataMap } from "@/features/executions/node-data-types";
-import { NodeType } from "../../generated/prisma/enums";
-import { ExecutionStatus } from "../../generated/prisma/enums";
+import { NodeType } from "@/generated/prisma/enums";
+import { ExecutionStatus } from "@/generated/prisma/enums";
 import { httpRequestChannel } from "./channels/http-request";
 import { manualTriggerChannel } from "./channels/manual-trigger";
 import { googleFormTriggerChannel } from "./channels/google-form-trigger";
@@ -41,7 +41,7 @@ export const executeWorkflow = inngest.createFunction(
       throw new NonRetriableError("Workflow ID is required");
     }
 
-    const { clerkId, sortedNodes, execution } = await step.run("prepare-workflow", async () => {
+    const { userId, sortedNodes, execution } = await step.run("prepare-workflow", async () => {
       const workflow = await prisma.workflow.findUniqueOrThrow({
         where: { id: workflowId },
         include: {
@@ -69,7 +69,7 @@ export const executeWorkflow = inngest.createFunction(
       }
 
       return {
-        clerkId: workflow.clerkId,
+        userId: workflow.userId,
         sortedNodes: topologicalSort(workflow.nodes, workflow.connections),
         execution,
       };
@@ -126,7 +126,7 @@ export const executeWorkflow = inngest.createFunction(
         nodeId: reactFlowNodeId, // Use React Flow ID for publishing
         step,
         publish,
-        clerkId, // Pass clerkId for credential lookup
+        userId, // Pass userId for credential lookup
       });
     }
 

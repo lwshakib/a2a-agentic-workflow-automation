@@ -1,13 +1,13 @@
 import { NodeExecutor } from "./../type";
-import { NodeType } from "../../../../generated/prisma/enums";
+import { NodeType } from "@/generated/prisma/enums";
 import { manualTriggerExecutor } from "@/features/triggers/components/manual-trigger/executor";
-import { httpRequestExecutor } from "../components/http-request/executor";
-import { geminiExecutor } from "../components/gemini/executor";
-import { anthropicExecutor } from "../components/anthropic/executor";
-import { openaiExecutor } from "../components/openai/executor";
-import { discordExecutor } from "../components/discord/executor";
-import { slackExecutor } from "../components/slack/executor";
-import { tavilyExecutor } from "../components/tavily/executor";
+import { httpRequestExecutor } from "@/features/executions/components/http-request/executor";
+import { geminiExecutor } from "@/features/executions/components/gemini/executor";
+import { anthropicExecutor } from "@/features/executions/components/anthropic/executor";
+import { openaiExecutor } from "@/features/executions/components/openai/executor";
+import { discordExecutor } from "@/features/executions/components/discord/executor";
+import { slackExecutor } from "@/features/executions/components/slack/executor";
+import { tavilyExecutor } from "@/features/executions/components/tavily/executor";
 import type {
   NodeDataMap,
   GoogleFormTriggerNodeData,

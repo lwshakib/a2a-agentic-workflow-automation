@@ -5,7 +5,7 @@ import { OpenAINode } from "@/features/executions/components/openai/node";
 import { DiscordNode } from "@/features/executions/components/discord/node";
 import { SlackNode } from "@/features/executions/components/slack/node";
 import { TavilyNode } from "@/features/executions/components/tavily/node";
-import { NodeType } from "../../../generated/prisma/enums";
+import { NodeType } from "@/generated/prisma/enums";
 import { InitialNode } from "./initial-node";
 import { NodeProps } from "@xyflow/react";
 import { ManualTriggerNode } from "@/features/triggers/components/manual-trigger/node";

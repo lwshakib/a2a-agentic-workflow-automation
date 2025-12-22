@@ -13,7 +13,7 @@ export const discordExecutor: NodeExecutor<DiscordNodeData> = async ({
   step,
   data,
   publish,
-  clerkId,
+  userId,
 }) => {
   console.log(
     `[Discord] Executor called for node: ${nodeId}, publish available: ${!!publish}`
@@ -103,11 +103,11 @@ export const discordExecutor: NodeExecutor<DiscordNodeData> = async ({
 
     try {
       // Fetch credential by ID
-      if (!clerkId) {
+      if (!userId) {
         throw new NonRetriableError("User context is required for credential lookup");
       }
 
-      const credentialResult = await getCredentialById(data.credentialId!, clerkId);
+      const credentialResult = await getCredentialById(data.credentialId!, userId);
       if (!credentialResult.success || !credentialResult.credential) {
         throw new NonRetriableError("Credential not found or access denied");
       }

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCredentials } from "@/actions/credential";
-import { NodeType } from "../../../../generated/prisma/enums";
+import { NodeType } from "@/generated/prisma/enums";
 
 export async function GET(request: NextRequest) {
   try {

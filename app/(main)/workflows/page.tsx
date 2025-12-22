@@ -47,7 +47,7 @@ import { toast } from "sonner";
 // Local type definition to avoid importing Prisma client in client components
 type Workflow = {
   id: string;
-  clerkId: string;
+  userId: string;
   name: string;
   description: string;
   createdAt: Date | string;

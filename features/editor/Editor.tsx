@@ -19,7 +19,7 @@ import { WorkflowType, useWorkflowStore } from "@/context";
 import { Node, Edge } from "@xyflow/react";
 import { NodeComponents } from "@/components/react-flow/node-components";
 import { AddNodeButton } from "@/components/react-flow/add-node-button";
-import { NodeType } from "../../../generated/prisma/enums";
+import { NodeType } from "@/generated/prisma/enums";
 import { ExecuteWorkflowButton } from "@/components/execute-workflow-button";
 import { toast } from "sonner";
 

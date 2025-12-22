@@ -13,7 +13,7 @@ export const slackExecutor: NodeExecutor<SlackNodeData> = async ({
   step,
   data,
   publish,
-  clerkId,
+  userId,
 }) => {
   console.log(
     `[Slack] Executor called for node: ${nodeId}, publish available: ${!!publish}`
@@ -84,11 +84,11 @@ export const slackExecutor: NodeExecutor<SlackNodeData> = async ({
 
     try {
       // Fetch credential by ID
-      if (!clerkId) {
+      if (!userId) {
         throw new NonRetriableError("User context is required for credential lookup");
       }
 
-      const credentialResult = await getCredentialById(data.credentialId!, clerkId);
+      const credentialResult = await getCredentialById(data.credentialId!, userId);
       if (!credentialResult.success || !credentialResult.credential) {
         throw new NonRetriableError("Credential not found or access denied");
       }

@@ -1,5 +1,5 @@
 import toposort from "toposort";
-import { Connection, Node } from "../../generated/prisma/client";
+import { Connection, Node } from "@/generated/prisma/client";
 
 export function topologicalSort(
   nodes: Node[],

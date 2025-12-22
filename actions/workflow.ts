@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { currentUser } from "@clerk/nextjs/server";
+import { currentUser } from "@/actions/user";
 import { revalidatePath } from "next/cache";
 import {
   createWorkflowSchema,
@@ -11,8 +11,8 @@ import {
 } from "@/validators/workflow";
 import { z } from "zod";
 import { Node, Edge } from "@xyflow/react";
-import { NodeType } from "../../generated/prisma/enums";
-import { Prisma } from "../../generated/prisma/client";
+import { NodeType } from "@/generated/prisma/enums";
+import { Prisma } from "@/generated/prisma/client";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -30,8 +30,8 @@ export async function getWorkflows(page: number = 1, search?: string) {
 
   try {
     const offset = (page - 1) * ITEMS_PER_PAGE;
-    const where: { clerkId: string; name?: { contains: string; mode: "insensitive" } } = {
-      clerkId: user.id,
+    const where: { userId: string; name?: { contains: string; mode: "insensitive" } } = {
+      userId: user.id,
     };
 
     if (search && search.trim()) {
@@ -82,7 +82,7 @@ export async function getWorkflowById(workflowId: string) {
     const workflow = await prisma.workflow.findFirst({
       where: {
         id: workflowId,
-        clerkId: user.id,
+        userId: user.id,
       },
       include: {
         nodes: true,
@@ -140,7 +140,7 @@ export async function createWorkflow(data: CreateWorkflowInput) {
 
     const workflow = await prisma.workflow.create({
       data: {
-        clerkId: user.id,
+        userId: user.id,
         name: validatedData.name,
         description: validatedData.description || "",
         nodes: {
@@ -190,7 +190,7 @@ export async function updateWorkflow(
     const workflow = await prisma.workflow.update({
       where: {
         id: workflowId,
-        clerkId: user.id,
+        userId: user.id,
       },
       data: {
         name: validatedData.name,
@@ -233,7 +233,7 @@ export async function deleteWorkflow(workflowId: string) {
     const workflow = await prisma.workflow.delete({
       where: {
         id: workflowId,
-        clerkId: user.id,
+        userId: user.id,
       },
     });
 
@@ -266,7 +266,7 @@ export async function duplicateWorkflow(workflowId: string) {
 
     const newWorkflow = await prisma.workflow.create({
       data: {
-        clerkId: user.id,
+        userId: user.id,
         name: `${result.workflow.name} (Copy)`,
         description: result.workflow.description,
       },
@@ -300,7 +300,7 @@ export async function saveWorkflowNodesAndConnections(
     const workflow = await prisma.workflow.findFirst({
       where: {
         id: workflowId,
-        clerkId: user.id,
+        userId: user.id,
       },
     });
 

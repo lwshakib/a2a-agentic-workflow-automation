@@ -3,7 +3,7 @@ import { Node, Edge } from "@xyflow/react";
 
 export interface WorkflowType {
   id: string;
-  clerkId: string;
+  userId: string;
   name: string;
   description: string;
   createdAt: Date | string;

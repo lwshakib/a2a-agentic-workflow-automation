@@ -11,7 +11,7 @@ export interface NodeExecutorParams<TData = Record<string, unknown>> {
   context: WorkflowContext;
   step: StepTools;
   publish?: Realtime.PublishFn; // TODO: add realtime later
-  clerkId?: string; // User's Clerk ID for credential lookup
+  userId?: string; // User's ID for credential lookup
 }
 
 export type NodeExecutor<TData = Record<string, unknown>> = (
