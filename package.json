@@ -12,7 +12,7 @@
     "db:migrate": "bun x prisma generate && bun x prisma migrate dev --name init",
     "db:studio": "bun x prisma studio",
     "db:reset": "bun x prisma migrate reset",
-    "inngest:dev": "npx inngest-cli@latest dev",
+    "inngest:dev": "npx --ignore-scripts=false inngest-cli@latest dev",
     "ngrok:dev": "ngrok http 3000",
     "dev:all": "mprocs"
   },

@@ -1,12 +1,12 @@
 procs:
   inngest:
-    shell: "npm run inngest:dev"
+    shell: "bun run inngest:dev"
     autoRestart: true
 
   next:
-    shell: "npm run dev"
+    shell: "bun run dev"
     autoRestart: true
 
   ngrok:
-    shell: "npm run ngrok:dev"
+    shell: "bun run ngrok:dev"
     autoRestart: true
