@@ -47,7 +47,8 @@ export default function SignUp() {
                         </Button>
                         <Button
                             type="button"
-                            variant="outline">
+                            variant="outline"
+                            disabled>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="1em"
@@ -66,7 +67,7 @@ export default function SignUp() {
                                     fill="#fbbc09"
                                     d="M256 256.002H134.335V134.336H256z"></path>
                             </svg>
-                            <span>Microsoft</span>
+                            <span>Microsoft (N/A)</span>
                         </Button>
                     </div>
 
