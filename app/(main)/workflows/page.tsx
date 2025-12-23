@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { formatDistanceToNow } from "date-fns";
@@ -54,7 +54,7 @@ type Workflow = {
   updatedAt: Date | string;
 };
 
-export default function page() {
+function WorkflowsContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [workflows, setWorkflows] = useState<Workflow[]>([]);
@@ -674,5 +674,42 @@ export default function page() {
         </DialogContent>
       </Dialog>
     </>
+  );
+}
+
+export default function WorkflowsPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex flex-col h-full">
+        <div className="px-6 pt-6 pb-4">
+          <div className="flex items-start justify-between mb-4">
+            <div className="flex flex-col gap-1">
+              <Skeleton className="h-9 w-40" />
+              <Skeleton className="h-4 w-56" />
+            </div>
+            <Skeleton className="h-10 w-32" />
+          </div>
+          <Skeleton className="h-10 w-64" />
+        </div>
+        <div className="flex-1 px-6 pb-4">
+          <div className="flex flex-col gap-3">
+            {Array.from({ length: 5 }).map((_, index) => (
+              <Card key={index} className="py-4 px-4">
+                <div className="flex items-center gap-4">
+                  <Skeleton className="size-5 rounded" />
+                  <div className="flex-1 min-w-0 space-y-2">
+                    <Skeleton className="h-5 w-48" />
+                    <Skeleton className="h-4 w-64" />
+                  </div>
+                  <Skeleton className="size-8 rounded" />
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </div>
+    }>
+      <WorkflowsContent />
+    </Suspense>
   );
 }

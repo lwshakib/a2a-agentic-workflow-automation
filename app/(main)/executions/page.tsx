@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -46,7 +46,7 @@ type Pagination = {
   total: number;
 };
 
-export default function ExecutionsPage() {
+function ExecutionsContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [executions, setExecutions] = useState<Execution[]>([]);
@@ -329,5 +329,21 @@ export default function ExecutionsPage() {
         </>
       )}
     </div>
+  );
+}
+
+export default function ExecutionsPage() {
+  return (
+    <Suspense fallback={
+      <div className="container mx-auto py-8 px-4">
+        <div className="space-y-4">
+          {[...Array(5)].map((_, i) => (
+            <Skeleton key={i} className="h-16 w-full" />
+          ))}
+        </div>
+      </div>
+    }>
+      <ExecutionsContent />
+    </Suspense>
   );
 }
