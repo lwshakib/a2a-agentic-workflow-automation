@@ -1,8 +1,19 @@
-import { Gemini, Replit, MagicUI, VSCodium, MediaWiki, GooglePaLM } from '@/components/logos'
 import { cn } from '@/lib/utils'
 import { LogoIcon } from '@/components/logo'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import Image from 'next/image'
+
+const integrations = [
+    { name: 'OpenAI', src: '/logos/openai.svg' },
+    { name: 'Anthropic', src: '/logos/anthropic.svg' },
+    { name: 'Gemini', src: '/logos/gemini.svg' },
+    { name: 'Slack', src: '/logos/slack.svg' },
+    { name: 'GitHub', src: '/logos/github.svg' },
+    { name: 'Stripe', src: '/logos/stripe.svg' },
+    { name: 'Tavily', src: '/logos/tavily.svg' },
+    { name: 'Discord', src: '/logos/discord.svg' },
+]
 
 export default function IntegrationsSection() {
     return (
@@ -12,13 +23,13 @@ export default function IntegrationsSection() {
                     <div className="relative mx-auto flex max-w-sm items-center justify-between">
                         <div className="space-y-6">
                             <IntegrationCard position="left-top">
-                                <Gemini />
+                                <Image src={integrations[0].src} alt={integrations[0].name} width={24} height={24}  />
                             </IntegrationCard>
                             <IntegrationCard position="left-middle">
-                                <Replit />
+                                <Image src={integrations[1].src} alt={integrations[1].name} width={24} height={24}  />
                             </IntegrationCard>
                             <IntegrationCard position="left-bottom">
-                                <MagicUI />
+                                <Image src={integrations[2].src} alt={integrations[2].name} width={24} height={24}  />
                             </IntegrationCard>
                         </div>
                         <div className="mx-auto my-2 flex w-fit justify-center gap-2">
@@ -36,13 +47,13 @@ export default function IntegrationsSection() {
 
                         <div className="space-y-6">
                             <IntegrationCard position="right-top">
-                                <VSCodium />
+                                <Image src={integrations[3].src} alt={integrations[3].name} width={24} height={24}  />
                             </IntegrationCard>
                             <IntegrationCard position="right-middle">
-                                <MediaWiki />
+                                <Image src={integrations[4].src} alt={integrations[4].name} width={24} height={24}  />
                             </IntegrationCard>
                             <IntegrationCard position="right-bottom">
-                                <GooglePaLM />
+                                <Image src={integrations[5].src} alt={integrations[5].name} width={24} height={24}  />
                             </IntegrationCard>
                         </div>
                     </div>

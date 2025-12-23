@@ -1,4 +1,5 @@
 import FooterSection from "@/components/footer";
+import IntegrationsSection from "@/components/integrations-4";
 import HeroSection from "@/components/hero-section";
 import {
   Accordion,
@@ -114,17 +115,6 @@ const faqs = [
     answer:
       "You can prototype with generous sandbox limits. Paid plans unlock higher throughput, SSO, audit logs, and premium support.",
   },
-];
-
-const integrations = [
-  { name: "OpenAI", src: "/logos/openai.svg" },
-  { name: "Anthropic", src: "/logos/anthropic.svg" },
-  { name: "Gemini", src: "/logos/gemini.svg" },
-  { name: "Slack", src: "/logos/slack.svg" },
-  { name: "GitHub", src: "/logos/github.svg" },
-  { name: "Stripe", src: "/logos/stripe.svg" },
-  { name: "Tavily", src: "/logos/tavily.svg" },
-  { name: "Discord", src: "/logos/discord.svg" },
 ];
 
 export default function Home() {
@@ -309,41 +299,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="integrations" className="py-16 md:py-24">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-            <div className="space-y-2">
-              <Badge variant="outline" className="w-fit">
-                Integrations
-              </Badge>
-              <h3 className="text-3xl font-semibold md:text-4xl">
-                Plug into the tools you already trust
-              </h3>
-              <p className="text-muted-foreground max-w-2xl">
-                Connect models, data sources, payment rails, and collaboration
-                hubs with a few clicks. No brittle glue code required.
-              </p>
-            </div>
-            <Button variant="ghost">View all connectors</Button>
-          </div>
-
-          <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4 md:gap-6">
-            {integrations.map((integration) => (
-              <Card key={integration.name} className="border-dashed">
-                <CardContent className="flex h-24 items-center justify-center">
-                  <Image
-                    src={integration.src}
-                    alt={`${integration.name} logo`}
-                    width={128}
-                    height={40}
-                    className="h-8 w-auto dark:invert"
-                  />
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
+      <IntegrationsSection />
 
       <section
         id="how-it-works"
